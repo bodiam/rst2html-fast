@@ -1,4 +1,4 @@
-d/target
+/target
 **/*.rs.bk
 *.swp
 *.swo
