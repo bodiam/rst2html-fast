@@ -4,3 +4,7 @@
 *.swo
 *~
 .DS_Store
+benchmarks/vendor/
+benchmarks/composer.*
+benchmarks/_bench_gregwar.php
+benchmarks/.venv/
