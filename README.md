@@ -4,15 +4,18 @@ The world's fastest reStructuredText to HTML converter. Written in Rust for maxi
 
 ## Performance
 
-rst2html-fast is **~200x faster** than docutils and **~400x faster** than Sphinx for typical RST documents.
+Benchmarked on a 413-line RST document (Apple Silicon, 100 iterations):
 
-| Tool | Time (347-line doc) | Relative |
-|---|---|---|
-| **rst2html-fast** | ~0.1 ms | 1x |
-| docutils | ~20 ms | ~200x slower |
-| Sphinx | ~40 ms | ~400x slower |
+| Tool | Language | Time | vs rst2html-fast |
+|---|---|---|---|
+| **rst2html-fast** | Rust | 4.27 ms | baseline |
+| docutils | Python | 30.08 ms | 7x slower |
+| Gregwar/RST | PHP | 60.50 ms | 14x slower |
+| Nim rst2html | Nim | 61.73 ms | 14x slower |
+| Pandoc | Haskell | 80.98 ms | 19x slower |
+| Sphinx | Python | 469.06 ms | 110x slower |
 
-Run your own benchmarks with `python3 benchmarks/compare.py`.
+Run your own benchmarks with `benchmarks/.venv/bin/python benchmarks/compare.py`.
 
 ## Installation
 
@@ -88,13 +91,21 @@ This is the same pattern used by the plugin's Sphinx integration, making rst2htm
 cargo bench
 ```
 
-### Comparison with docutils and Sphinx
+### Comparison with other converters
 
-Requires Python 3 with `docutils` and `sphinx` installed:
+Compares against docutils, Pandoc, Sphinx, Nim rst2html, and Gregwar/RST (PHP):
 
 ```bash
-pip install docutils sphinx
-python3 benchmarks/compare.py
+python3 -m venv benchmarks/.venv
+benchmarks/.venv/bin/pip install docutils sphinx
+benchmarks/.venv/bin/python benchmarks/compare.py
+```
+
+The script auto-detects installed tools. Optionally install more converters:
+
+```bash
+brew install pandoc nim
+cd benchmarks && composer require gregwar/rst
 ```
 
 ## Running tests
